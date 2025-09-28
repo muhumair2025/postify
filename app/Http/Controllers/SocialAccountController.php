@@ -67,7 +67,7 @@ class SocialAccountController extends Controller
                         
                 case 'facebook':
                     return Socialite::driver('facebook')
-                        ->scopes(['pages_manage_posts', 'pages_read_engagement'])
+                        ->scopes(['pages_show_list', 'pages_read_engagement'])
                         ->redirect();
                         
                 case 'instagram':
