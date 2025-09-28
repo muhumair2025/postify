@@ -418,16 +418,16 @@ class PostController extends Controller
         ]);
         
         // Create Google Client
-        $client = new \Google_Client();
+        $client = new \Google\Client();
         $client->setClientId(config('services.google.client_id'));
         $client->setClientSecret(config('services.google.client_secret'));
         $client->setAccessToken($socialAccount->access_token);
         
         // Create YouTube service
-        $youtube = new \Google_Service_YouTube($client);
+        $youtube = new \Google\Service\YouTube($client);
         
         // Prepare video snippet
-        $snippet = new \Google_Service_YouTube_VideoSnippet();
+        $snippet = new \Google\Service\YouTube\VideoSnippet();
         $snippet->setTitle($post->title);
         $snippet->setDescription($post->content ?: '');
         $snippet->setCategoryId($post->youtube_category_id ?: '22'); // Default to People & Blogs
@@ -438,7 +438,7 @@ class PostController extends Controller
         }
         
         // Set privacy status
-        $status = new \Google_Service_YouTube_VideoStatus();
+        $status = new \Google\Service\YouTube\VideoStatus();
         $status->setPrivacyStatus($post->visibility === 'unlisted' ? 'unlisted' : 'public');
         
         // Handle YouTube Shorts
@@ -447,7 +447,7 @@ class PostController extends Controller
         }
         
         // Create video resource
-        $video = new \Google_Service_YouTube_Video();
+        $video = new \Google\Service\YouTube\Video();
         $video->setSnippet($snippet);
         $video->setStatus($status);
         
@@ -458,7 +458,7 @@ class PostController extends Controller
         $insertRequest = $youtube->videos->insert('status,snippet', $video);
         
         // Create media upload
-        $media = new \Google_Http_MediaFileUpload(
+        $media = new \Google\Http\MediaFileUpload(
             $client,
             $insertRequest,
             'video/*',

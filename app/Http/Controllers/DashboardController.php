@@ -167,12 +167,12 @@ class DashboardController extends Controller
     {
         try {
             // Check if Google API client classes exist
-            if (!class_exists('\Google_Client') || !class_exists('\Google_Service_YouTube')) {
+            if (!class_exists('\Google\Client') || !class_exists('\Google\Service\YouTube')) {
                 \Log::warning('Google API client not available for YouTube integration');
                 return null;
             }
             
-            $client = new \Google_Client();
+            $client = new \Google\Client();
             $client->setAccessToken($account->access_token);
             
             // Check if token is valid and refresh if possible
@@ -182,8 +182,9 @@ class DashboardController extends Controller
                 // Try to refresh the token if refresh token is available
                 if ($account->refresh_token) {
                     try {
-                        $client->setRefreshToken($account->refresh_token);
-                        $newToken = $client->fetchAccessTokenWithRefreshToken();
+                        // Use the refresh token to get a new access token
+                        $client->refreshToken($account->refresh_token);
+                        $newToken = $client->getAccessToken();
                         
                         if (isset($newToken['access_token'])) {
                             // Update the account with new token
@@ -207,7 +208,7 @@ class DashboardController extends Controller
                 }
             }
             
-            $youtube = new \Google_Service_YouTube($client);
+            $youtube = new \Google\Service\YouTube($client);
             
             // Get channel information for the authenticated user
             $channelResponse = $youtube->channels->listChannels('id,snippet', [
@@ -238,12 +239,12 @@ class DashboardController extends Controller
             \Log::info("Fetching YouTube videos for account {$account->id} - Channel: {$account->channel_id}");
             
             // Check if Google API client classes exist
-            if (!class_exists('\Google_Client') || !class_exists('\Google_Service_YouTube')) {
+            if (!class_exists('\Google\Client') || !class_exists('\Google\Service\YouTube')) {
                 \Log::warning('Google API client not available for YouTube integration');
                 return [];
             }
             
-            $client = new \Google_Client();
+            $client = new \Google\Client();
             $client->setAccessToken($account->access_token);
             
             // Check if token is valid and refresh if possible
@@ -253,8 +254,9 @@ class DashboardController extends Controller
                 // Try to refresh the token if refresh token is available
                 if ($account->refresh_token) {
                     try {
-                        $client->setRefreshToken($account->refresh_token);
-                        $newToken = $client->fetchAccessTokenWithRefreshToken();
+                        // Use the refresh token to get a new access token
+                        $client->refreshToken($account->refresh_token);
+                        $newToken = $client->getAccessToken();
                         
                         if (isset($newToken['access_token'])) {
                             // Update the account with new token
@@ -278,7 +280,7 @@ class DashboardController extends Controller
                 }
             }
             
-            $youtube = new \Google_Service_YouTube($client);
+            $youtube = new \Google\Service\YouTube($client);
             \Log::info("YouTube client initialized successfully");
             
             // Get channel uploads playlist (use channel_id or account_id as fallback)
