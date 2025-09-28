@@ -45,27 +45,27 @@ return [
     */
 
     'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID', '885852749625-jdkhk2fsh3ca2kr79jgn7jmnb0qiv7qb.apps.googleusercontent.com'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
-        'redirect' => env('APP_URL', 'http://localhost:8000') . '/social-accounts/callback/youtube',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('APP_URL') . '/social-accounts/callback/youtube',
     ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => env('APP_URL', 'http://localhost:8000') . '/social-accounts/callback/facebook',
+        'redirect' => env('APP_URL') . '/social-accounts/callback/facebook',
     ],
 
     'instagram' => [
         'client_id' => env('INSTAGRAM_CLIENT_ID'),
         'client_secret' => env('INSTAGRAM_CLIENT_SECRET'),
-        'redirect' => env('APP_URL', 'http://localhost:8000') . '/social-accounts/callback/instagram',
+        'redirect' => env('APP_URL') . '/social-accounts/callback/instagram',
     ],
 
     'tiktok' => [
         'client_id' => env('TIKTOK_CLIENT_ID'),
         'client_secret' => env('TIKTOK_CLIENT_SECRET'),
-        'redirect' => env('APP_URL', 'http://localhost:8000') . '/social-accounts/callback/tiktok',
+        'redirect' => env('APP_URL') . '/social-accounts/callback/tiktok',
     ],
 
 ];
